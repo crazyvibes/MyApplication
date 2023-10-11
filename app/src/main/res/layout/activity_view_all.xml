@@ -39,9 +39,6 @@
 
     </RelativeLayout>
 
-
-
-
     <RelativeLayout
         android:id="@+id/search_user_layout"
         android:layout_width="match_parent"
@@ -78,9 +75,6 @@
 
 
     </RelativeLayout>
-
-
-
 
     <HorizontalScrollView
         android:layout_width="wrap_content"
@@ -152,18 +146,9 @@
     </HorizontalScrollView>
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/showViewAllList_recyler"
+        android:id="@+id/rvListCourses"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         />
-
-
-
-
-
-
-
-
-
 
   </LinearLayout>

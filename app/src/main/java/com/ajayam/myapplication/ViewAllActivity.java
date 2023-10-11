@@ -22,7 +22,7 @@ public class ViewAllActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_all);
 
-        RecyclerView recyclerView = findViewById(R.id.showViewAllList_recyler);
+        RecyclerView recyclerView = findViewById(R.id.rvListCourses);
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(this, 2);
         recyclerView.setLayoutManager(gridLayoutManager);
 
