@@ -6,41 +6,111 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextUtils;
+import android.text.TextWatcher;
+import android.util.Log;
+import android.view.View;
 
+import com.ajayam.myapplication.adapter.CourseDetailsAdapter;
 import com.ajayam.myapplication.adapter.DummyModelAdapter;
+import com.ajayam.myapplication.databinding.ActivityMainBinding;
+import com.ajayam.myapplication.databinding.ActivityViewAllBinding;
 import com.ajayam.myapplication.model.DummyModel;
+import com.ajayam.myapplication.model.Index;
+import com.google.gson.Gson;
 
 import java.util.ArrayList;
+import java.util.List;
 
-public class ViewAllActivity extends AppCompatActivity {
+public class ViewAllActivity extends AppCompatActivity implements View.OnClickListener {
 
-    ArrayList<DummyModel> arrContacts = new ArrayList<>();
 
+    ActivityViewAllBinding binding;
+    ArrayList<Integer> filteredList;
+    ArrayList<Integer> list ;
+    CourseDetailsAdapter adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_view_all);
+        binding = ActivityViewAllBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
 
-        RecyclerView recyclerView = findViewById(R.id.rvListCourses);
+        getIntentData();
+        textWatcher();
+
+    }
+
+    private void textWatcher() {
+        binding.etSearch.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+                filter(String.valueOf(charSequence));
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+
+            }
+        });
+    }
+
+    private void getIntentData() {
+        if(getIntent().hasExtra("TITLE")){
+            String title = getIntent().getStringExtra("TITLE");
+            list = getIntent().getIntegerArrayListExtra("COURSES");
+
+            filteredList = list;
+
+            binding.tvTitle.setText(title);
+            setAdapter(list);
+
+        }
+    }
+
+    private void setAdapter(ArrayList<Integer> list) {
+
         GridLayoutManager  gridLayoutManager = new GridLayoutManager(this, 2);
-        recyclerView.setLayoutManager(gridLayoutManager);
+        binding.rvCourses.setLayoutManager(gridLayoutManager);
 
-//        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        adapter = new CourseDetailsAdapter(this, filteredList);
+        binding.rvCourses.setAdapter(adapter);
+    }
 
-        arrContacts.add(new DummyModel(R.drawable.imgb, "According to the docs", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "when the recyclerView is being", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "How could I make the scroll down", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "NestedScrollView because it disable", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "when the recyclerView is being", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "According to the docs", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "NestedScrollView because it disable", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "NestedScrollView because it", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "when the recyclerView is", "7717788236" ));
-        arrContacts.add(new DummyModel(R.drawable.imgb, "when the recyclerView is being", "7717788236" ));
+    public void filter(String searchText) {
+        Log.e("TAG", "filter: "+searchText );
+        filteredList.clear();
+        if (TextUtils.isEmpty(searchText)) {
+            filteredList = list; // If the search text is empty, show all items.
+            Log.e("TAG", "filte: "+new Gson().toJson(filteredList)+" "+new Gson().toJson(list));
+        } else {
+            try {
+                int searchValue = Integer.parseInt(searchText);
+                for (Integer data : list) {
+                    if (data == searchValue) {
+                        filteredList.add(data); // Add items that match the search text.
+                    }
+                }
+            }
+            catch (NumberFormatException e) {
+                    // Handle invalid integer input (e.g., non-integer search text).
+                }
 
-        DummyModelAdapter adapter = new DummyModelAdapter(this, arrContacts);
-        recyclerView.setAdapter(adapter);
+        }
+        adapter.notifyDataSetChanged(); // Notify the adapter that the data has changed.
+        Log.e("TAG", "filter: "+new Gson().toJson(filteredList));
+    }
 
+    @Override
+    public void onClick(View view) {
+        if()
     }
 }

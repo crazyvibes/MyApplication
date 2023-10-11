@@ -14,8 +14,9 @@
         <ImageView
             android:id="@+id/ivCourse"
             android:layout_width="230dp"
-            android:layout_height="350dp"
-            android:src="@drawable/imga" />
+            android:layout_height="280dp"
+            android:src="@drawable/imga"
+            android:scaleType="fitXY"/>
 
         <TextView
             android:id="@+id/tvCourseNName"
@@ -23,7 +24,8 @@
             android:layout_height="wrap_content"
             android:maxLines="2"
             android:paddingTop="4dp"
-            android:text="Movie Name is ajay kumar right corner"
+            android:text=""
+            android:gravity="center"
             android:textColor="@color/white"
             android:textSize="18sp"
             android:textStyle="bold" />
@@ -33,7 +35,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingVertical="3dp"
-            android:text="Movie Hint"
+            android:text=""
             android:textColor="@color/gray"
             android:textSize="18sp"
             android:textStyle="normal" />

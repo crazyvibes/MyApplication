@@ -1,5 +1,7 @@
 package com.ajayam.myapplication.viewmodels;
 
+import static androidx.constraintlayout.widget.Constraints.TAG;
+
 import android.app.Application;
 import android.content.Context;
 import android.util.Log;
@@ -12,7 +14,11 @@ import androidx.lifecycle.MutableLiveData;
 import com.ajayam.myapplication.data.ApiManager;
 import com.ajayam.myapplication.data.Repository;
 import com.ajayam.myapplication.model.Collections;
+import com.ajayam.myapplication.model.Courses;
+import com.ajayam.myapplication.model.DataCollection;
 import com.ajayam.myapplication.model.Example;
+import com.ajayam.myapplication.model.Smart;
+import com.ajayam.myapplication.model.User;
 import com.ajayam.myapplication.utils.CommonMethods;
 import com.google.gson.Gson;
 
@@ -21,6 +27,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.CompositeDisposable;
@@ -62,6 +69,9 @@ public class MainViewModel extends AndroidViewModel {
                         @Override
                         public void onSuccess(Example response) {
                             Log.e("TAG", "getDataResponse: "+new Gson().toJson(response));
+
+                          //  extractData(response);
+
                             isLoading.setValue(false);
 
                             mutableLiveData.setValue(response);
@@ -90,6 +100,8 @@ public class MainViewModel extends AndroidViewModel {
 
 
     }
+
+
 
     public MutableLiveData<Boolean> getIsLoading() {
         return isLoading;
